@@ -21,3 +21,13 @@ df['NEW_TITLE'] = df.NAME.str.extract(' ([A-Za-z]+)\\.', expand=False)
 df["NEW_FAMILY_SIZE"] = df["SIBSP"] + df["PARCH"] + 1
 df["NEW_AGE_PCLASS"] = df["AGE"] * df["PCLASS"]
 df.head()
+
+df.loc[((df['SIBSP'] + df['PARCH']) > 0), "NEW_IS_ALONE"] = "NO"
+df.loc[((df['SIBSP'] + df['PARCH']) == 0), "NEW_IS_ALONE"] = "YES"
+# age level
+df.loc[(df['AGE'] < 18), 'NEW_AGE_CAT'] = 'young'
+df.loc[(df['AGE'] >= 18) & (df['AGE'] < 56), 'NEW_AGE_CAT'] = 'mature'
+df.loc[(df['AGE'] >= 56), 'NEW_AGE_CAT'] = 'senior'
+
+
+
